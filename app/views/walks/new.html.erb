@@ -1,0 +1,10 @@
+<h3>Créer une nouvelle promenade</h3>
+<%= form_for @walk, url: {action: "create"}, method: :post, role: "form" do |f| %>
+  <div class="form-group">
+    <%= f.label :duration, 'Durée de la promenade (min)' %>
+    <%= f.number_field :duration, class: "form-control", required: true  %>
+  </div>
+  <%= f.submit "Créer", class: "btn btn-primary" %>
+<% end  %>
+
+
