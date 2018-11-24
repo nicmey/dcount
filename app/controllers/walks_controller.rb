@@ -2,11 +2,17 @@ class WalksController < ApplicationController
   before_action :verify_user, except: [:rankings]
 
   def rankings
-    @users = User.all
+    @users = User.all.sort_by{|u| - u.duration_walks}
   end
 
   def new
     @walk = Walk.new
+    @weathers = [ ['Temps clair', 'clear'],
+                  ['Bruine', 'drizzle'],
+                  ['Pluie', 'rain'],
+                  ['Neige', 'snow'],
+                  ['Nuageux', 'clouds'],
+                  ['Orage', 'thunderstom'] ]
   end
 
   def index
@@ -17,6 +23,7 @@ class WalksController < ApplicationController
   def create
     @walk = @user.walks.create(walks_params)
     if @walk.save
+      @walk.add_weather_bonus
       redirect_to root_path
     end
   end
@@ -30,7 +37,7 @@ class WalksController < ApplicationController
   private
 
   def walks_params
-    params.require(:walk).permit(:duration)
+    params.require(:walk).permit(:duration, :weather)
   end
 
   def verify_user
@@ -39,4 +46,5 @@ class WalksController < ApplicationController
       flash[:alert] = "Vous ne pouvez pas effectuer cette action" 
     end
   end
+
 end

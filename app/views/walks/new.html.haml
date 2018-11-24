@@ -1,0 +1,56 @@
+%h3 Créer une nouvelle promenade
+= form_for @walk, url: {action: "create"}, method: :post, role: "form" do |f|
+  %div
+    %p#city
+    %p#desc
+  .form-group
+    = f.label :weather, 'Météo'
+    = f.select(:weather, options_for_select(@weathers), {}, {class: "form-control"})
+    = f.label :duration, 'Durée de la promenade (min)'
+    = f.number_field :duration, class: "form-control", required: true
+    %br
+    = f.submit "Créer", class: "btn btn-primary"
+
+
+:javascript
+
+  var api = "https://fcc-weather-api.glitch.me/api/current?";
+  var lat, lon;
+  var tempUnit = 'C';
+  var currentTempInCelsius;
+
+  $( document ).ready(function(){
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        var lat = "lat=" + position.coords.latitude;
+        var lon = "lon=" + position.coords.longitude;
+        getWeather(lat, lon);
+      });
+    } else {
+      console.log("Geolocation is not supported by this browser.");
+    } 
+    
+  })
+
+  function getWeather(lat, lon) {
+    var urlString = api + lat + "&" + lon;
+    $.ajax({
+      url: urlString, success: function (result) {
+        $("#city").text(result.name);
+        $("#desc").text(fr_desc(result.weather[0].main));
+        $("select").val((result.weather[0].main).toLowerCase());
+      }
+    });
+  }
+
+  function fr_desc(desc) {
+    switch (desc.toLowerCase()) {
+      case 'clouds': return 'Nuageux'
+      case 'drizzle': return 'Bruine'
+      case 'rain': return 'Pluie'
+      case 'snow': return 'Neige'
+      case 'clear': return 'Temps clair'
+      case 'thunderstom': return 'Orage'
+    }
+  }
+

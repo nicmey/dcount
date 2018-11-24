@@ -1,0 +1,35 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title Dcount
+    = csrf_meta_tags
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
+    %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    %link{:crossorigin => "anonymous", :href => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css", :integrity => "sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u", :rel => "stylesheet"}/
+    %script{:crossorigin => "anonymous", :integrity => "sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa", :src => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"}
+  %body
+    - if notice
+      %p.notice= notice
+    - if alert
+      %p.alert= alert
+    %header.navbar.navbar-inverse
+      .navbar-class
+        .navbar-wagon
+          / Logo
+          %a.navbar-wagon-brand{:href => "/"}
+            = image_tag ("logo.png")
+          / Right Navigation
+          .navbar-wagon-right{:style => "width: 50%;"}
+            - if user_signed_in?
+              Bienvenue #{@user.username}!
+              %li= link_to "Déconnexion", destroy_user_session_path, method: :delete, class: "navbar-wagon-item navbar-wagon-link"
+            - else
+              %li= link_to "Connexion", new_user_session_path, class: "navbar-wagon-item navbar-wagon-link"
+    .container{:style => "font-size: 15px;"}
+      = yield
+
+

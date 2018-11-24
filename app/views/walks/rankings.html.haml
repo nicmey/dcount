@@ -1,0 +1,23 @@
+%h3 Dog count
+%div
+  %table.table
+    %thead
+      %tr
+        %th{:colspan => "3"} Classement
+    %tbody
+      - @users.each do |user|
+        %tr
+          %td
+            = user.username
+          %td
+            = user.number_walks
+            promenades
+          %td
+            = user.duration_walks
+            minutes
+          %td
+            = link_to "", walks_path(:user_id => "#{user.id}"), class: "glyphicon glyphicon-eye-open"
+
+- if user_signed_in?
+  %div
+    = link_to "Nouvelle promenade", new_walk_path, class: "btn btn-primary"

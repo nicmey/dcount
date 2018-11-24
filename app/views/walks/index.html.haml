@@ -1,0 +1,20 @@
+%h3
+  Promenade de #{@user_selected.username}
+%div
+  %table.table
+    %thead
+      %tr
+        %th{:colspan => "2"} Promenade
+    %tbody
+      - @walks.order('created_at desc').each do |walk|
+        %tr
+          %td
+            Promenade de #{walk.duration} minutes
+            - if walk.bonus?
+              (#{walk.bonus_pct_value})
+          %td
+            le #{walk.created_at.strftime('%d/%m/%y à %H:%M')}
+          - if @user.id == @user_selected.id
+            %td
+              = link_to "X", walk_path(walk.id), method: :delete, data: {:confirm => 'Voulez-vous vraiment supprimer cette promenade?'}
+= link_to "< Retour", root_path
