@@ -12,6 +12,8 @@ class WalksController < ApplicationController
                   ['Pluie', 'rain'],
                   ['Neige', 'snow'],
                   ['Nuageux', 'clouds'],
+				  ['Brume', 'mist'],
+				  ['Brouillard', 'fog'],
                   ['Orage', 'thunderstom'] ]
   end
 
