@@ -28,7 +28,8 @@ class WalksController < ApplicationController
       @walk.add_weather_bonus
       unless params[:user_ids].blank?
         params[:user_ids].each do |user_id|
-          User.find(user_id).walks.create(walks_params)
+          walk = User.find(user_id).walks.create(walks_params)
+		  walk.add_weather_bonus
         end
       end
       redirect_to root_path
