@@ -12,8 +12,8 @@ class WalksController < ApplicationController
                   ['Pluie', 'rain'],
                   ['Neige', 'snow'],
                   ['Nuageux', 'clouds'],
-				  ['Brume', 'mist'],
-				  ['Brouillard', 'fog'],
+                  ['Brouillard', 'fog'],
+                  ['Brume', 'mist'],
                   ['Orage', 'thunderstom'] ]
   end
 
@@ -26,6 +26,11 @@ class WalksController < ApplicationController
     @walk = @user.walks.create(walks_params)
     if @walk.save
       @walk.add_weather_bonus
+      unless params[:user_ids].blank?
+        params[:user_ids].each do |user_id|
+          User.find(user_id).walks.create(walks_params)
+        end
+      end
       redirect_to root_path
     end
   end
