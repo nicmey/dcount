@@ -13,7 +13,7 @@
             - if walk.bonus?
               (#{walk.bonus_pct_value})
           %td
-            le #{walk.created_at.strftime('%d/%m/%y à %H:%M')}
+            le #{walk.date.strftime('%d/%m/%y à %H:%M')}
           - if @user.id == @user_selected.id
             %td
               = link_to "X", walk_path(walk.id), method: :delete, data: {:confirm => 'Voulez-vous vraiment supprimer cette promenade?'}

@@ -8,6 +8,8 @@
     = f.select(:weather, options_for_select(@weathers), {}, {class: "form-control"})
     = f.label :duration, 'Durée de la promenade (min)'
     = f.number_field :duration, class: "form-control", required: true
+    = f.label :date, 'Date de la promenade'
+    = f.datetime_field :date, class: "form-control", value: Time.now.strftime("%Y-%m-%dT%H:%M"), required: true
     %p{ :style => "font-weight: bold;" }
       Inviter d'autre personnes
     - User.where.not(id: @user.id).each do |user|

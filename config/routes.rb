@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   root :to => 'walks#rankings'
 
   resources :walks
+  get '/dashboard', to: "dashboard#index"
 end

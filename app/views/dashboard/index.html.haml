@@ -1,0 +1,27 @@
+%h3 
+  Doggo
+  = dog_face(@last_walk_in_h)
+- if @last_walk_in_h
+  - if @last_walk_in_h == 0
+    %p
+      Promené il y a moins d'une heure
+  - else
+    %p
+      Promené il y a #{@last_walk_in_h} #{'heure'.pluralize(@last_walk_in_h)}
+  %div
+    %table.table
+      %thead
+        %tr
+          %th{:colspan => "3"} Promenades
+      %tbody
+        -@walks_today.each do |walk|
+          %tr
+            %td
+              = walk.username
+            %td
+              #{walk.duration} min
+            %td
+              à #{walk.date.strftime("%H:%M")}
+- else
+  %p
+    Pas encore de promenade aujourd'hui !
