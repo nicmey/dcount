@@ -13,4 +13,12 @@ class User < ApplicationRecord
   def duration_walks
     walks.inject(0){ |sum, n| sum + n.duration }
   end
+
+  def number_walks_current_month
+    walks.where("date >= ?", Time.now.beginning_of_month).count
+  end
+
+  def duration_walks_current_month
+    walks.where("date >= ?", Time.now.beginning_of_month).sum(:duration)
+  end
 end
