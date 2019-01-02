@@ -2,7 +2,7 @@ class WalksController < ApplicationController
   before_action :verify_user, except: [:rankings]
 
   def rankings
-    @users = User.all.sort_by{|u| - u.duration_walks}
+    @users = User.all.sort_by{|u| - u.duration_walks_current_month}
   end
 
   def new
